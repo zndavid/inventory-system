@@ -28,9 +28,56 @@ It includes the following features:
 
 ---
 
-## 🚀 Running the App (with Docker)
+## 🚀 Running the App
 
-### 1. Build and start the app with Docker Compose
+### Build and Run Locally
 
 ```bash
-docker compose up --build
+mvn clean package
+java -jar target/inventory-service-0.0.1-SNAPSHOT.jar
+```
+### Build images and start containers
+```bash
+docker compose up --build -d
+```
+
+### Stop and remove containers
+```bash
+docker compose down
+```
+
+
+## 📡 Example cURL Requests
+
+### Create a new product
+```bash
+curl -X POST "http://localhost:8080/products" \
+-H "Content-Type: application/json" \
+-d '{"name":"Sample","quantity":5,"price":19.99}'
+```
+
+### Get all products
+```bash
+curl "http://localhost:8080/products"
+```
+
+### Search products by name
+```bash
+curl "http://localhost:8080/products/search?name=sample"
+```
+### Update product quantity
+```bash
+curl -X PATCH "http://localhost:8080/products/{id}?quantity=10"
+```
+
+### Delete a product
+```bash
+curl -X DELETE "http://localhost:8080/products/{id}"
+```
+### Get inventory summary
+```bash
+curl "http://localhost:8080/products/summary"
+```
+
+## 📝 Swagger UI
+http://localhost:8080/swagger-ui/index.html

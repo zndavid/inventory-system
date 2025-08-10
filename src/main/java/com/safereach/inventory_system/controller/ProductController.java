@@ -96,7 +96,7 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/quantity")
+    @PatchMapping("/{id}/quantity")
     @Operation(summary = "Update product quantity", description = "Updates the quantity of a specific product")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product quantity updated successfully",

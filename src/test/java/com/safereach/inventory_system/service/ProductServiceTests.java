@@ -195,10 +195,12 @@ public class ProductServiceTests {
             public long getTotalProducts() {
                 return 5L;
             }
+
             @Override
             public long getTotalQuantity() {
                 return 100L;
             }
+
             @Override
             public BigDecimal getAveragePrice() {
                 return BigDecimal.valueOf(50);

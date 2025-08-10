@@ -28,5 +28,6 @@ public record ProductSummaryResponse(
 
             @Schema(description = "Name of the product", example = "Monitor")
             String name
-    ) {}
+    ) {
+    }
 }

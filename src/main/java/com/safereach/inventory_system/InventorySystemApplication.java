@@ -8,8 +8,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 public class InventorySystemApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(InventorySystemApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InventorySystemApplication.class, args);
+    }
 
 }

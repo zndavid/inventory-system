@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductServiceTests {
+public class ProductServiceTest {
     private static final String PRODUCT_NAME = "Test Product";
     private static final String PRODUCT_NAME_2 = "Another Test Product";
     private static final BigDecimal PRODUCT_PRICE = BigDecimal.valueOf(100L);

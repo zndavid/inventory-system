@@ -144,6 +144,16 @@ public class ProductServiceTest {
     }
 
     @Test
+    void givenNonExistingName_whenSearchProductByName_thenThrowException() {
+        String searchName = "NonExistent";
+
+        when(productRepository.findByNameContainingIgnoreCase(searchName)).thenReturn(List.of());
+
+        assertThrows(ProductNotFoundException.class, () -> productService.searchProductByName(searchName));
+        verify(productRepository).findByNameContainingIgnoreCase(searchName);
+    }
+
+    @Test
     void givenExistingId_whenDeleteProduct_thenInvokeDelete() {
         when(productRepository.existsById(PRODUCT_ID)).thenReturn(true);
 

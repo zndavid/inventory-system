@@ -40,6 +40,9 @@ public class ProductService {
 
     public List<ProductResponse> searchProductByName(String name) {
         List<Product> products = productRepository.findByNameContainingIgnoreCase(name);
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("No products found with name: " + name);
+        }
         return products.stream()
                 .map(productMapper::toResponse)
                 .toList();

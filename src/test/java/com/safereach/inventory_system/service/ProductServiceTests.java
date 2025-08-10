@@ -4,9 +4,10 @@ import com.safereach.inventory_system.dto.ProductRequest;
 import com.safereach.inventory_system.dto.ProductResponse;
 import com.safereach.inventory_system.dto.ProductSummaryResponse;
 import com.safereach.inventory_system.entity.Product;
+import com.safereach.inventory_system.exception.ProductAlreadyExistsException;
+import com.safereach.inventory_system.exception.ProductNotFoundException;
 import com.safereach.inventory_system.mapper.ProductMapper;
 import com.safereach.inventory_system.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,6 +59,17 @@ public class ProductServiceTests {
         assertNotNull(actual);
         assertEquals(expected, actual);
         verify(productRepository, times(1)).save(any(Product.class));
+    }
+
+    @Test
+    void givenExistingName_whenCreateProduct_thenThrowProductAlreadyExistsException() {
+        ProductRequest request = new ProductRequest(PRODUCT_NAME, PRODUCT_QUANTITY, PRODUCT_PRICE);
+
+        when(productRepository.existsByName(PRODUCT_NAME)).thenReturn(true);
+
+        assertThrows(ProductAlreadyExistsException.class,
+                () -> productService.createProduct(request));
+        verify(productRepository, never()).save(any());
     }
 
     @Test
@@ -144,7 +156,7 @@ public class ProductServiceTests {
     void givenNonExistingId_whenDeleteProduct_thenThrowException() {
         when(productRepository.existsById(PRODUCT_ID)).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, () -> productService.deleteProduct(PRODUCT_ID));
+        assertThrows(ProductNotFoundException.class, () -> productService.deleteProduct(PRODUCT_ID));
     }
 
     @Test
@@ -170,7 +182,7 @@ public class ProductServiceTests {
     void givenNonExistingId_whenUpdateProductQuantity_thenThrowException() {
         when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> productService.updateProductQuantity(PRODUCT_ID, 5));
+        assertThrows(ProductNotFoundException.class, () -> productService.updateProductQuantity(PRODUCT_ID, 5));
         verify(productRepository).findById(PRODUCT_ID);
         verify(productRepository, never()).save(any());
     }

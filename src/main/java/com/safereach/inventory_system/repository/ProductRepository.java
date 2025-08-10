@@ -20,6 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
      */
     List<Product> findByNameContainingIgnoreCase(String name);
 
+    boolean existsByName(String name);
+
     @Query("""
              SELECT
               COUNT(p) AS totalProducts,
